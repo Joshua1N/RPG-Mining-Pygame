@@ -5,6 +5,7 @@ from miners.ash import *
 from miners.blockyguy import *
 from miners.jerome import *
 from miners.demtreuisdemarcusdejamesdathird import *
+from miners.head import *
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -57,6 +58,7 @@ class Game:
         self.blocky_guy = BlockyGuy('blockyguy', 440, 485, 5)
         self.jerome = Jerome('jerome', 440, 810, 5)
         self.demtreuis_demarcus_dejames_dathird = DemtreuisDemarcusDejamesDathird('DemtreuisDemarcusDejamesDathird', 440, 645, 5)
+        self.head = Head('head', 440, 970, 5)
 
     ############### INTRO FUNCTIONS ###############
     def start_events(self):
@@ -90,6 +92,7 @@ class Game:
         self.blocky_guy.walking()
         self.jerome.walking()
         self.demtreuis_demarcus_dejames_dathird.walking()
+        self.head.walking()
 
     def playing_draw(self):
         screen.fill('white')
@@ -99,5 +102,6 @@ class Game:
         self.blocky_guy.drawing()
         self.jerome.drawing()
         self.demtreuis_demarcus_dejames_dathird.drawing()
+        self.head.drawing()
 
         pygame.display.update()
