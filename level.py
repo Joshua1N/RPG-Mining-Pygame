@@ -41,9 +41,6 @@ class Level:
                 if cell == '3':
                     jewishppl = BlackStone((x, y), TILESIZE)
                     self.blackPpl.add(jewishppl)
-                if cell == 'P':
-                    bitch = DemtreuisDemarcusDejamesDathird((x, y), TILESIZE * 2)
-                    self.bitches.add(bitch)
                 if cell == 'B':
                     cash_building = CashMoneyBuilding((x, y), TILESIZE * 4)
                     self.buildings.add(cash_building)
@@ -53,27 +50,12 @@ class Level:
                 if cell == 'D':
                     dark_stone = SemiDarkStone((x, y), TILESIZE)
                     self.blocks.add(dark_stone)
-                if cell == 'J':
-                    jerome = Jerome((x, y), TILESIZE * 2)
-                    self.bitches.add(jerome)
-                if cell == 'A':
-                    ash = Ash((x, y), TILESIZE * 2)
-                    self.bitches.add(ash)
-                if cell == 'H':
-                    head = Head((x, y), TILESIZE * 2)
-                    self.bitches.add(head)
-                if cell == 'G':
-                    blockyguy = BlockyGuy((x, y), TILESIZE * 2)
-                    self.bitches.add(blockyguy)
                 if cell == 'U':
                     pumpy = PumpyPump((x, y), TILESIZE * 3)
                     self.buildings.add(pumpy)
                 if cell == 'E':
                     elevator = Elevator((x, y), TILESIZE * 5)
                     self.buildings.add(elevator)
-                if cell == 'F':
-                    fatguy = FatGuy((x, y), TILESIZE * 2)
-                    self.bitches.add(fatguy)
 
     def run(self):
         self.ground.draw(self.display_surface)

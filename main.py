@@ -1,6 +1,10 @@
 import pygame, sys
 from map import *
 from level import Level
+from miners.ash import *
+from miners.blockyguy import *
+from miners.jerome import *
+from miners.demtreuisdemarcusdejamesdathird import *
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -13,6 +17,7 @@ class Game:
         self.running = True
         self.state = 'playing'
         self.level = Level(map, screen)
+        self.loaded = False
 
         self.load()
 
@@ -26,6 +31,7 @@ class Game:
                 self.playing_events()
                 self.playing_update()
                 self.playing_draw()
+
             elif self.state == 'help':
                 # How to play page here
                 pass
@@ -46,26 +52,11 @@ class Game:
         screen.blit(text, pos)
 
     def load(self):
-        # Player
-        self.player = pygame.Rect(100, 100, 30, 60)
-        # Elevator
-        self.elevator = pygame.Rect(185, 200, 235, 20)
-        # Grass Ground
-        self.ground = pygame.image.load('assets/Grass.png').convert_alpha()
-        self.ground = pygame.transform.scale(self.ground, (1500, 20))
-        self.ground_rect = self.ground.get_rect()
-        # Stone Ground
-        self.stone = pygame.image.load('assets/Stone.png').convert_alpha()
-        self.stone = pygame.transform.scale(self.stone, (1500, 20))
-        self.stone_rect = self.stone.get_rect()
-        '''self.ground = pygame.Rect(420, 200, 1500, 20)
-        self.coal_floor = pygame.Rect(420, 372, 1500, 20)
-        self.iron_floor = pygame.Rect(420, 544, 1500, 20)
-        self.gold_floor = pygame.Rect(420, 716, 1500, 20)
-        self.platinum_floor = pygame.Rect(420, 888, 1500, 20)
-        self.diamond_floor = pygame.Rect(420, 1060, 1500, 20)
-        self.stone = pygame.image.load('assets/stone.png').convert_alpha()
-        self.stone = pygame.transform.scale(self.stone, (50, 50))'''
+        # Miners
+        self.ash = Ash('ash', 440, 325, 5)
+        self.blocky_guy = BlockyGuy('blockyguy', 440, 485, 5)
+        self.jerome = Jerome('jerome', 440, 810, 5)
+        self.demtreuis_demarcus_dejames_dathird = DemtreuisDemarcusDejamesDathird('DemtreuisDemarcusDejamesDathird', 440, 645, 5)
 
     ############### INTRO FUNCTIONS ###############
     def start_events(self):
@@ -85,6 +76,7 @@ class Game:
     ############### PLAYING FUNCTIONS ###############
 
     def playing_events(self):
+        key = pygame.key.get_pressed()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
@@ -92,30 +84,20 @@ class Game:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.state = 'start'
-        key = pygame.key.get_pressed()
-        if key[pygame.K_s]:
-            self.elevator.y = self.elevator.y + 4
 
     def playing_update(self):
-        pass
+        self.ash.walking()
+        self.blocky_guy.walking()
+        self.jerome.walking()
+        self.demtreuis_demarcus_dejames_dathird.walking()
 
     def playing_draw(self):
         screen.fill('white')
 
         self.level.run()
+        self.ash.drawing()
+        self.blocky_guy.drawing()
+        self.jerome.drawing()
+        self.demtreuis_demarcus_dejames_dathird.drawing()
 
         pygame.display.update()
-
-
-'''        pygame.draw.rect(screen, 'grey', self.coal_floor)
-        pygame.draw.rect(screen, 'grey', self.iron_floor)
-        pygame.draw.rect(screen, 'grey', self.gold_floor)
-        pygame.draw.rect(screen, 'grey', self.platinum_floor)
-        pygame.draw.rect(screen, 'grey', self.diamond_floor)
-        screen.blit(self.stone, (1800, 300))
-        pygame.draw.rect(screen, 'blue', self.player)
-        pygame.draw.rect(screen, 'red', self.elevator)
-        # pygame.draw.rect(screen, 'dark green', self.ground)
-        screen.blit(self.stone, (420, 372))
-        screen.blit(self.ground, (420, 200))
-        '''
