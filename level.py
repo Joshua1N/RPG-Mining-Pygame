@@ -3,16 +3,13 @@ from blocks.grass import Grass
 from blocks.stone import Stone
 from blocks.darkStone import BlackStone
 from blocks.semiDarkStone import SemiDarkStone
-from miners.demtreuisdemarcusdejamesdathird import DemtreuisDemarcusDejamesDathird
-from miners.jerome import Jerome
-from miners.ash import Ash
-from miners.head import Head
-from miners.blockyguy import BlockyGuy
 from buildings.cashmoney import CashMoneyBuilding
-from carts.cartempty import CartEmpty
 from buildings.pumpypump import PumpyPump
-from buildings.elevator import Elevator
-from miners.fatguy import FatGuy
+from ores.coal import Coal
+from ores.iron import Iron
+from ores.gold import Gold
+from ores.diamond import Diamond
+from ores.bitcoin import Bitcoin
 from map import TILESIZE
 
 
@@ -27,7 +24,7 @@ class Level:
         self.blackPpl = pygame.sprite.Group()
         self.bitches = pygame.sprite.Group()
         self.buildings = pygame.sprite.Group()
-        self.carts = pygame.sprite.Group()
+        self.ores = pygame.sprite.Group()
         for row_index, row in enumerate(layout):
             for col_index, cell in enumerate(row):
                 x = col_index * TILESIZE
@@ -44,18 +41,27 @@ class Level:
                 if cell == 'B':
                     cash_building = CashMoneyBuilding((x, y), TILESIZE * 4)
                     self.buildings.add(cash_building)
-                if cell == 'C':
-                    empty_cart = CartEmpty((x, y), TILESIZE)
-                    self.carts.add(empty_cart)
-                if cell == 'D':
+                if cell == 'Z':
                     dark_stone = SemiDarkStone((x, y), TILESIZE)
                     self.blocks.add(dark_stone)
                 if cell == 'U':
                     pumpy = PumpyPump((x, y), TILESIZE * 3)
                     self.buildings.add(pumpy)
-                if cell == 'E':
-                    elevator = Elevator((x, y), TILESIZE * 5)
-                    self.buildings.add(elevator)
+                if cell == '5':
+                    coal = Coal((x, y), TILESIZE * 2)
+                    self.ores.add(coal)
+                if cell == '6':
+                    iron = Iron((x, y), TILESIZE * 2)
+                    self.ores.add(iron)
+                if cell == '7':
+                    gold = Gold((x, y), TILESIZE * 2)
+                    self.ores.add(gold)
+                if cell == '8':
+                    diamond = Diamond((x, y), TILESIZE * 2)
+                    self.ores.add(diamond)
+                if cell == '9':
+                    bitcoin = Bitcoin((x, y), TILESIZE * 2)
+                    self.ores.add(bitcoin)
 
     def run(self):
         self.ground.draw(self.display_surface)
@@ -63,4 +69,4 @@ class Level:
         self.blackPpl.draw(self.display_surface)
         self.bitches.draw(self.display_surface)
         self.buildings.draw(self.display_surface)
-        self.carts.draw(self.display_surface)
+        self.ores.draw(self.display_surface)

@@ -9,11 +9,15 @@ class DemtreuisDemarcusDejamesDathird(pygame.sprite.Sprite):
         self.direction = 1
         self.flip = False
         self.loaded = False
-        img = pygame.image.load('assets/demtreuis-demarcus-dejames-dathird.png').convert_alpha()
+        img = pygame.image.load('C:/Users/Brandon/PycharmProjects/RPG-MINING-PROJECT/assets/demtreuis-demarcus-dejames-dathird.png').convert_alpha()
         self.image = pygame.transform.scale(img, (108, 108))
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.screen = pygame.display.get_surface()
+        self.counter, self.text = 5, '5'.rjust(3)
+        pygame.time.set_timer(pygame.USEREVENT + 2, 3000)
+        self.demtreuis_demarcus_dejames_dathird_running = True
+        self.gold = 0
 
     def move(self, moving_left, moving_right):
         # reset movement variables
@@ -37,13 +41,19 @@ class DemtreuisDemarcusDejamesDathird(pygame.sprite.Sprite):
     def walking(self):
         if not self.loaded:
             self.move(moving_left=0, moving_right=1)
-            if self.rect.x >= 1920 - 108:
+            self.speed = 5
+            if self.rect.x >= 1920 - 170:
                 self.loaded = True
+                self.demtreuis_demarcus_dejames_dathird_running = False
 
         if self.loaded:
             self.move(moving_left=1, moving_right=0)
+            self.speed = 3
             if self.rect.x <= 386:
+                self.gold += 1
+                # print(f'Iron: {self.iron}')
                 self.loaded = False
+                self.demtreuis_demarcus_dejames_dathird_running = True
 
     def drawing(self):
         self.screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)

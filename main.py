@@ -6,6 +6,8 @@ from miners.blockyguy import *
 from miners.jerome import *
 from miners.demtreuisdemarcusdejamesdathird import *
 from miners.head import *
+from buildings.elevator import Elevator
+from carts.cartcoal import Cart
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -19,6 +21,7 @@ class Game:
         self.state = 'playing'
         self.level = Level(map, screen)
         self.loaded = False
+        self.coins = 0
 
         self.load()
 
@@ -32,6 +35,7 @@ class Game:
                 self.playing_events()
                 self.playing_update()
                 self.playing_draw()
+                self.test()
 
             elif self.state == 'help':
                 # How to play page here
@@ -57,8 +61,10 @@ class Game:
         self.ash = Ash('ash', 440, 325, 5)
         self.blocky_guy = BlockyGuy('blockyguy', 440, 485, 5)
         self.jerome = Jerome('jerome', 440, 810, 5)
-        self.demtreuis_demarcus_dejames_dathird = DemtreuisDemarcusDejamesDathird('DemtreuisDemarcusDejamesDathird', 440, 645, 5)
+        self.demtreuis_demarcus_dejames_dathird = DemtreuisDemarcusDejamesDathird('DemtreuisDemarcusDejamesDathird', 440, 645, 3)
         self.head = Head('head', 440, 970, 5)
+        self.elevator = Elevator('elevator', 245, 400, 5)
+        self.cart = Cart('cart', 420, 190, 3)
 
     ############### INTRO FUNCTIONS ###############
     def start_events(self):
@@ -77,7 +83,15 @@ class Game:
 
     ############### PLAYING FUNCTIONS ###############
 
+    def test(self):
+        # print(self.cart.rect.x)
+        if self.cart.rect.x >= 1666:
+            self.coins = (self.ores[0]) + (self.ores[1] * 2) + (self.ores[2] * 3) + (self.ores[3] * 4) + (self.ores[4] * 5)
+            print(f"Coins: {self.coins}")
+
     def playing_events(self):
+        # WORKING ON THIS
+        # self.x = [self.ash.rect.x, self.blocky_guy.rect.x]
         key = pygame.key.get_pressed()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -86,6 +100,11 @@ class Game:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.state = 'start'
+        self.ores = [self.ash.coal, self.blocky_guy.iron, self.demtreuis_demarcus_dejames_dathird.gold, self.jerome.diamonds, self.head.bitcoins]
+        # print(f"Coal: {self.ores[0]} \n Iron: {self.ores[1]} \n Gold: {self.ores[2]} \n Diamonds: {self.ores[3]} \n Bitcoin: {self.ores[4]}")
+        '''for x in self.x:
+            if x >= 600:
+                print('working')'''
 
     def playing_update(self):
         self.ash.walking()
@@ -93,6 +112,9 @@ class Game:
         self.jerome.walking()
         self.demtreuis_demarcus_dejames_dathird.walking()
         self.head.walking()
+        self.elevator.walking()
+        self.cart.walking()
+
 
     def playing_draw(self):
         screen.fill('white')
@@ -103,5 +125,8 @@ class Game:
         self.jerome.drawing()
         self.demtreuis_demarcus_dejames_dathird.drawing()
         self.head.drawing()
+        self.elevator.drawing()
+        self.cart.drawing()
+        self.draw_text(f"Coins: {self.coins}", screen, [WIDTH / 2, 50], 100, 10, "black")
 
         pygame.display.update()
