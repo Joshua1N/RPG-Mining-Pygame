@@ -6,10 +6,11 @@ class Jerome(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.char_type = char_type
         self.speed = speed
+        self.loaded_speed = 2
         self.direction = 1
         self.flip = False
         self.loaded = False
-        img = pygame.image.load('C:/Users/Brandon/PycharmProjects/RPG-MINING-PROJECT/assets/Jerome.png').convert_alpha()
+        img = pygame.image.load('C:/Users/jlnelson/PycharmProjects/RPG-Mining-Pygame-main/retard/assets/Jerome.png').convert_alpha()
         self.image = pygame.transform.scale(img, (108, 108))
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
@@ -48,7 +49,8 @@ class Jerome(pygame.sprite.Sprite):
 
         if self.loaded:
             self.move(moving_left=1, moving_right=0)
-            self.speed = 2
+            self.speed = self.speed
+            self.loaded_speed = self.loaded_speed
             if self.rect.x <= 386:
                 self.diamonds += 1
                 # print(f'Iron: {self.iron}')

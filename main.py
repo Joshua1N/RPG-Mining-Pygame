@@ -18,7 +18,7 @@ class Game:
     def __init__(self):
         self.clock = pygame.time.Clock()
         self.running = True
-        self.state = 'playing'
+        self.state = 'start'
         self.level = Level(map, screen)
         self.loaded = False
         self.coins = 0
@@ -57,6 +57,21 @@ class Game:
         screen.blit(text, pos)
 
     def load(self):
+        # START SCREEN
+        self.title = pygame.image.load('C:/Users/jlnelson/PycharmProjects/RPG-Mining-Pygame-main/retard/assets/Title.png').convert_alpha()
+        self.title = pygame.transform.scale(self.title, (800, 150)).convert_alpha()
+        self.start_button = pygame.image.load('C:/Users/jlnelson/PycharmProjects/RPG-Mining-Pygame-main/retard/assets/Play-Button.png').convert_alpha()
+        self.start_button_rect = self.start_button.get_rect(center=(680, 400))
+        self.start_button = pygame.transform.scale(self.start_button, (400, 75)).convert_alpha()
+        self.exit_button = pygame.image.load('C:/Users/jlnelson/PycharmProjects/RPG-Mining-Pygame-main/retard/assets/Exit.png').convert_alpha()
+        self.exit_button = pygame.transform.scale(self.exit_button, (400, 75)).convert_alpha()
+        self.exit_button_rect = self.exit_button.get_rect(center=(680, 600))
+        self.howtoplay_button = pygame.image.load('C:/Users/jlnelson/PycharmProjects/RPG-Mining-Pygame-main/retard/assets/HowToPlay.png').convert_alpha()
+        self.howtoplay_button = pygame.transform.scale(self.howtoplay_button, (500, 100)).convert_alpha()
+        self.howtoplay_button_rect = self.howtoplay_button.get_rect(center=(650, 800))
+        self.corner_logo = pygame.image.load('C:/Users/jlnelson/PycharmProjects/RPG-Mining-Pygame-main/retard/assets/Title.png')
+        self.corner_logo = pygame.transform.scale(self.corner_logo, (300, 100))
+
         # Miners
         self.ash = Ash('ash', 440, 325, 5)
         self.blocky_guy = BlockyGuy('blockyguy', 440, 485, 5)
@@ -66,6 +81,11 @@ class Game:
         self.elevator = Elevator('elevator', 245, 400, 5)
         self.cart = Cart('cart', 420, 190, 3)
 
+        # Buy Button
+        self.buy_button = pygame.image.load('C:/Users/jlnelson/PycharmProjects/RPG-Mining-Pygame-main/retard/assets/Upgrade.png')
+        self.buy_button = pygame.transform.scale(self.buy_button, (100, 50))
+        self.buy_button_rect = self.buy_button.get_rect(center=(250, 250))
+
     ############### INTRO FUNCTIONS ###############
     def start_events(self):
         for event in pygame.event.get():
@@ -73,13 +93,23 @@ class Game:
                 self.running = False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                pass
+                if self.start_button_rect.collidepoint(pygame.mouse.get_pos()):
+                    self.state = 'playing'
+                elif self.howtoplay_button_rect.collidepoint(pygame.mouse.get_pos()):
+                    self.state = 'help'
+                elif self.exit_button_rect.collidepoint(pygame.mouse.get_pos()):
+                    pygame.quit()
+                    sys.exit()
 
     def start_update(self):
         pass
 
     def start_draw(self):
-        pass
+        screen.blit(self.title, (500, 10))
+        screen.blit(self.start_button, (720, 400))
+        screen.blit(self.exit_button, (720, 600))
+        screen.blit(self.howtoplay_button, (690, 800))
+        pygame.display.update()
 
     ############### PLAYING FUNCTIONS ###############
 
@@ -87,11 +117,8 @@ class Game:
         # print(self.cart.rect.x)
         if self.cart.rect.x >= 1666:
             self.coins = (self.ores[0]) + (self.ores[1] * 2) + (self.ores[2] * 3) + (self.ores[3] * 4) + (self.ores[4] * 5)
-            print(f"Coins: {self.coins}")
 
     def playing_events(self):
-        # WORKING ON THIS
-        # self.x = [self.ash.rect.x, self.blocky_guy.rect.x]
         key = pygame.key.get_pressed()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -100,11 +127,17 @@ class Game:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.state = 'start'
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if self.buy_button_rect.collidepoint(pygame.mouse.get_pos()):
+                    if self.coins >= 10:
+                        self.coins -= 10
+                        self.ash.loaded_speed = 6
+                        self.blocky_guy.loaded_speed = 5
+                        self.demtreuis_demarcus_dejames_dathird.loaded_speed = 4
+                        self.jerome.loaded_speed = 3
+                        self.head.loaded_speed = 2
+
         self.ores = [self.ash.coal, self.blocky_guy.iron, self.demtreuis_demarcus_dejames_dathird.gold, self.jerome.diamonds, self.head.bitcoins]
-        # print(f"Coal: {self.ores[0]} \n Iron: {self.ores[1]} \n Gold: {self.ores[2]} \n Diamonds: {self.ores[3]} \n Bitcoin: {self.ores[4]}")
-        '''for x in self.x:
-            if x >= 600:
-                print('working')'''
 
     def playing_update(self):
         self.ash.walking()
@@ -128,5 +161,7 @@ class Game:
         self.elevator.drawing()
         self.cart.drawing()
         self.draw_text(f"Coins: {self.coins}", screen, [WIDTH / 2, 50], 100, 10, "black")
+        screen.blit(self.corner_logo, (5, 10))
+        screen.blit(self.buy_button, (200, 200))
 
         pygame.display.update()

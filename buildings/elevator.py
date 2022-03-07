@@ -1,9 +1,9 @@
 import pygame.display
-from miners.ash import *
-from miners.blockyguy import *
-from miners.jerome import *
-from miners.demtreuisdemarcusdejamesdathird import *
-from miners.head import *
+from retard.miners.ash import *
+from retard.miners.blockyguy import *
+from retard.miners.jerome import *
+from retard.miners.demtreuisdemarcusdejamesdathird import *
+from retard.miners.head import *
 
 
 class Elevator(pygame.sprite.Sprite):
@@ -14,23 +14,12 @@ class Elevator(pygame.sprite.Sprite):
         self.direction = 1
         self.flip = False
         self.loaded = False
-        img = pygame.image.load('C:/Users/Brandon/PycharmProjects/RPG-MINING-PROJECT/assets/elevator.png').convert_alpha()
+        img = pygame.image.load('C:/Users/jlnelson/PycharmProjects/RPG-Mining-Pygame-main/retard/assets/elevator.png').convert_alpha()
         self.image = pygame.transform.scale(img, (270, 270))
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.screen = pygame.display.get_surface()
-        '''self.counter, self.text = 5, '5'.rjust(3)
-        pygame.time.set_timer(pygame.USEREVENT + 4, 5000)'''
         self.elevator_running = True
-
-        '''self.ash = Ash('ash', 440, 325, 5)
-        self.blocky_guy = BlockyGuy('blockyguy', 440, 485, 4)
-        self.jerome = Jerome('jerome', 440, 810, 2)
-        self.demtreuis_demarcus_dejames_dathird = DemtreuisDemarcusDejamesDathird('DemtreuisDemarcusDejamesDathird', 440, 645, 3)
-        self.head = Head('head', 440, 970, 1)
-        self.elevator = Elevator('elevator', 200, 400, 3)
-
-        self.ores = [self.ash.coal, self.blocky_guy.iron, self.demtreuis_demarcus_dejames_dathird.gold, self.jerome.diamonds, self.head.bitcoins]'''
 
     def move(self, moving_up, moving_down):
         # reset movement variables
@@ -56,13 +45,10 @@ class Elevator(pygame.sprite.Sprite):
                 # while self.elevator_running:
                 self.loaded = True
                 self.head_running = False
-                '''for event in pygame.event.get():
-                                        if event.type == pygame.USEREVENT + 4:'''
 
         if self.loaded:
             self.move(moving_up=1, moving_down=0)
             if self.rect.y <= 268:
-                print(f'Unloaded: ')
                 self.loaded = False
                 self.elevator_running = True
                 # print(self.coins)
