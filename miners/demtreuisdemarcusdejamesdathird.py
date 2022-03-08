@@ -49,8 +49,7 @@ class DemtreuisDemarcusDejamesDathird(pygame.sprite.Sprite):
 
         if self.loaded:
             self.move(moving_left=1, moving_right=0)
-            self.speed = self.speed
-            self.loaded_speed = self.loaded_speed
+            self.speed = self.loaded_speed
             if self.rect.x <= 386:
                 self.gold += 1
                 # print(f'Iron: {self.iron}')

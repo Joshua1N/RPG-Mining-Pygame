@@ -38,7 +38,7 @@ class Cart(pygame.sprite.Sprite):
             img = pygame.image.load('C:/Users/jlnelson/PycharmProjects/RPG-Mining-Pygame-main/retard/assets/Cart-Gold.png')
             self.image = pygame.transform.scale(img, (54, 54))
             self.move(moving_left=0, moving_right=1)
-            self.speed = 5
+            self.speed = self.speed
             pygame.display.update()
             if self.rect.x >= 1670:
                 self.loaded = True
@@ -48,7 +48,7 @@ class Cart(pygame.sprite.Sprite):
             img = pygame.image.load('C:/Users/jlnelson/PycharmProjects/RPG-Mining-Pygame-main/retard/assets/Cart-Empty.png')
             self.image = pygame.transform.scale(img, (54, 54))
             self.move(moving_left=1, moving_right=0)
-            self.speed = 5
+            self.speed = self.speed
             pygame.display.update()
             if self.rect.x <= 400:
                 # print(f'Iron: {self.iron}')

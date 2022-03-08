@@ -1,3 +1,4 @@
+#imports
 import pygame
 from blocks.grass import Grass
 from blocks.stone import Stone
@@ -12,12 +13,12 @@ from ores.diamond import Diamond
 from ores.bitcoin import Bitcoin
 from map import TILESIZE
 
-
+#initializes the level
 class Level:
     def __init__(self, level_data, surface):
         self.display_surface = surface
         self.setup_level(level_data)
-
+#placing still objects on the tile map
     def setup_level(self, layout):
         self.ground = pygame.sprite.Group()
         self.blocks = pygame.sprite.Group()
